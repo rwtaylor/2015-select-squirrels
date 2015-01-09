@@ -1,5 +1,12 @@
-```{r load, cache=FALSE, echo=FALSE, results='hide'}
+```{r load, cache=FALSE, echo=FALSE, results='hide', message = FALSE}
 library(dplyr)
+library(pedantics)
+library(kinship2)
+library(foreach)
+library(doMC)
+library(MCMCglmm)
+library(dplyr)
+registerDoMC()
 ```
 
 # Which individuals to genotype?
