@@ -215,7 +215,7 @@ winnowPedigree <- function(ped, fullsib_cutoff = 3, generation_cutoff = 1, inclu
 **Some Plots**
 Be sure to load the plot_fix function below.
 
-```{r fig.width = 11, fig.height = 8.5}
+```{r fig.width = 20, fig.height = 10}
 source("plot_fix.R")
 plot_ped_1 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 2, generation_cutoff = 2, include_families = 1:5)
 
@@ -227,7 +227,7 @@ write.csv(plot_ped_1$pedigree, file = "plot_ped_1.csv")
 plot_fix(plot_ped_1[[1]], width = 1000, cex = 0.25, col = plot_ped_1$color)
 ```
 
-```{r fig.width = 11, fig.height = 8.5}
+```{r fig.width = 20, fig.height = 10}
 source("plot_fix.R")
 plot_ped_2 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 2, generation_cutoff = 1, include_families = 1)
 
