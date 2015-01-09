@@ -1,4 +1,4 @@
-```{r load, cache=FALSE, echo=TRUE, results='hide'}
+```{r load, cache=FALSE, echo=FALSE, results='hide'}
 library(dplyr)
 ```
 
@@ -24,7 +24,7 @@ This function does some cleanup and calculates some variables.
   * Calculate fullsibs and sibships (only including individuals with DNA)
   * Generational depth (again only individuals with DNA)
 
-```{r}
+```{r echo=FALSE, results='hide'}
 processPedigree <- function(ped, dna_year_cutoff = 2006){
   # pedigree format
   #dataframe with these columns in this order:
@@ -153,12 +153,17 @@ processPedigree <- function(ped, dna_year_cutoff = 2006){
   return(ped)
 }
 
+```
+
+**Process Pedigree**
+
+```{r }
 ped_to_clean = ped_2011 %>% filter(Grid == "KS") %>% dplyr::select(ID, DAM.ID, SIRE.ID, Sex, DNA, DAM.DNA, SIRE.DNA, BYEAR)
 
 processed_pedigree <- processPedigree(ped_to_clean, dna_year_cutoff = 2006)
 ```
 
-**Winnow pedigree**
+**Winnow pedigree function**
 
   * Prune to individuals with DNA.
   * Prune pedigree to prioritize individuals with n or more fullsibs. Fullsibs calculated among individuals with DNA and only for individuals whose parents both have DNA.
@@ -166,8 +171,7 @@ processed_pedigree <- processPedigree(ped_to_clean, dna_year_cutoff = 2006)
   * Prune to largest family(ies). e.g. 1 = largest family, 1:5 = largest 5 families.
   * Results returned as "kinship2::pedigree" for plotting. Affected is individuals with related parents. Color is red for individuals without DNA.
 
-```{r}
-
+```{r echo=FALSE, results='hide'}
 winnowPedigree <- function(ped, fullsib_cutoff = 3, generation_cutoff = 1, include_families = 1:100, no_dna_ok = FALSE){
   require(MCMCglmm)
   require(pedantics)
@@ -209,10 +213,9 @@ winnowPedigree <- function(ped, fullsib_cutoff = 3, generation_cutoff = 1, inclu
 
   return(list(t_ped, color = target_ped$color, pedigree = target_ped))
 }
-
 ```
 
-**Some Plots**
+**Plot some pedigrees**
 
 ```{r fig.width = 20, fig.height = 10, dpi = 300}
 source("plot_fix.R")
