@@ -10,7 +10,7 @@ library(dplyr)
 **load pedigree**
 
 ```{r }
-ped_2011 <- read.csv(file = "../data/Pedigree2011b.csv", header = TRUE, stringsAsFactors = FALSE)
+ped_2011 <- read.csv(file = "Pedigree2011b.csv", header = TRUE, stringsAsFactors = FALSE)
 ```
 
 **Process pedigree function**
