@@ -1,20 +1,3 @@
-
-<<<<<<< HEAD
-=======
-```
-## 
-## Attaching package: 'dplyr'
-## 
-## The following object is masked from 'package:stats':
-## 
-##     filter
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
->>>>>>> FETCH_HEAD
-
 # Which individuals to genotype?
 
   * outbred parents with large sibships
