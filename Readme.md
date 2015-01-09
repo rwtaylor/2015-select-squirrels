@@ -313,7 +313,6 @@ winnowPedigree <- function(ped, fullsib_cutoff = 3, generation_cutoff = 1, inclu
 ```
 
 **Some Plots**
-Be sure to load the plot_fix function below.
 
 
 ```r
