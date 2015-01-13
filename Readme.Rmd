@@ -17,7 +17,8 @@ registerDoMC()
 **load pedigree**
 
 ```{r }
-ped_2011 <- read.csv(file = "Pedigree2011b.csv", header = TRUE, stringsAsFactors = FALSE)
+ped_2014 <- read.csv(file = "pedigree_2014.csv", header = TRUE, stringsAsFactors = FALSE)
+ped_2014 <- tbl_dt(ped_2014)
 ```
 
 **Process pedigree function**
@@ -43,8 +44,6 @@ processPedigree <- function(ped, dna_year_cutoff = 2006){
   require(foreach)
   require(doMC)
   registerDoMC()
-  
-  names(ped) <- c("id", "dam", "sire", "sex", "dna", "dam_dna", "sire_dna", "year")
 
   # Set zeros to NA
   ped$id[ped$id == 0] <- NA
@@ -165,7 +164,7 @@ processPedigree <- function(ped, dna_year_cutoff = 2006){
 **Process Pedigree**
 
 ```{r }
-ped_to_clean = ped_2011 %>% filter(Grid == "KS") %>% dplyr::select(ID, DAM.ID, SIRE.ID, Sex, DNA, DAM.DNA, SIRE.DNA, BYEAR)
+ped_to_clean = ped_2014 %>% filter(grid == "KS") %>% rename(year = byear)
 
 processed_pedigree <- processPedigree(ped_to_clean, dna_year_cutoff = 2006)
 ```
