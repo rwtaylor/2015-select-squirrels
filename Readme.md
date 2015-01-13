@@ -34,7 +34,7 @@ This function does some cleanup and calculates some variables.
 
 
 ```r
-ped_to_clean = ped_2014 %>% filter(grid == "KS") %>% rename(year = byear)
+ped_to_clean = ped_2014 %>% filter(grid == "KS") %>% mutate(year = dna_year)
 
 processed_pedigree <- processPedigree(ped_to_clean, dna_year_cutoff = 2006)
 ```
@@ -63,25 +63,28 @@ processed_pedigree <- processPedigree(ped_to_clean, dna_year_cutoff = 2006)
 
 ```r
 source("plot_fix.R")
-plot_ped_1 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 2, generation_cutoff = 2, include_families = 1:5)
+plot_ped_1 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 3, generation_cutoff = 2, include_families = 1:10)
 ```
 
 ```
-##   Var1 Freq
-## 1    1  248
-## 5    5   15
-## 7    7   14
-## 6    6   10
-## 2    2    6
-## 8    8    6
-## 3    3    4
-## 4    4    4
-## 9    9    4
+##    Var1 Freq
+## 1     1   53
+## 5     5   25
+## 8     8   20
+## 12   12   11
+## 6     6    9
+## 10   10    9
+## 11   11    9
+## 3     3    7
+## 7     7    7
+## 9     9    7
+## 2     2    6
+## 4     4    5
 ```
 
 ```r
 pdf(file = "target_pedigree_1.pdf", width = 11, height = 8.5)
-  plot_fix(plot_ped_1[[1]], width = 1000, cex = 0.25, col = plot_ped_1$color)
+  plot_fix(plot_ped_1[[1]], width = 1000, cex = 0.3, col = plot_ped_1$color)
 dev.off()
 ```
 
@@ -95,8 +98,8 @@ print(plot_ped_1[[1]])
 ```
 
 ```
-## Pedigree object with 293 subjects
-## Bit size= 355
+## Pedigree object with 157 subjects
+## Bit size= 188
 ```
 
 ```r
@@ -109,41 +112,25 @@ plot_fix(plot_ped_1[[1]], width = 1000, cex = 0.25, col = plot_ped_1$color)
 
 ```r
 source("plot_fix.R")
-plot_ped_2 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 2, generation_cutoff = 1, include_families = 1)
+plot_ped_2 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 2, generation_cutoff = 3, include_families = 1:5)
 ```
 
 ```
-##    Var1 Freq
-## 1     1  385
-## 11   11   58
-## 10   10   23
-## 6     6    8
-## 14   14    8
-## 4     4    7
-## 8     8    7
-## 13   13    7
-## 2     2    6
-## 3     3    5
-## 5     5    5
-## 16   16    5
-## 18   18    5
-## 7     7    4
-## 9     9    4
-## 12   12    4
-## 15   15    4
-## 17   17    4
+##   Var1 Freq
+## 1    1   94
+## 4    4   18
+## 9    9   14
+## 2    2   13
+## 5    5   12
+## 7    7    9
+## 8    8    8
+## 3    3    6
+## 6    6    6
 ```
 
 ```r
 pdf(file = "target_pedigree_2.pdf", width = 11, height = 8.5)
-  plot_fix(plot_ped_2[[1]], width = 1000, cex = 0.4, col = plot_ped_2$color)
-```
-
-```
-## Did not plot the following people: 9426 9427
-```
-
-```r
+  plot_fix(plot_ped_2[[1]], width = 10000, cex = 0.3, col = plot_ped_2$color)
 dev.off()
 ```
 
@@ -157,8 +144,8 @@ print(plot_ped_2[[1]])
 ```
 
 ```
-## Pedigree object with 385 subjects
-## Bit size= 503
+## Pedigree object with 151 subjects
+## Bit size= 155
 ```
 
 ```r
@@ -169,7 +156,99 @@ plot_fix(plot_ped_2[[1]], width = 1000, cex = 0.4, col = plot_ped_2$color)
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
 
+
+```r
+source("plot_fix.R")
+plot_ped_3 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 1, generation_cutoff = 4, include_families = 1:10)
 ```
-## Did not plot the following people: 9426 9427
+
 ```
+##   Var1 Freq
+## 1    1   69
+## 3    3   10
+## 4    4    9
+## 5    5    7
+## 2    2    6
+## 6    6    6
+## 7    7    3
+```
+
+```r
+pdf(file = "target_pedigree_3.pdf", width = 11, height = 8.5)
+  plot_fix(plot_ped_3[[1]], width = 1000, cex = 0.5, col = plot_ped_3$color)
+dev.off()
+```
+
+```
+## pdf 
+##   2
+```
+
+```r
+print(plot_ped_3[[1]])
+```
+
+```
+## Pedigree object with 110 subjects
+## Bit size= 91
+```
+
+```r
+write.csv(plot_ped_3$pedigree, file = "plot_ped_3.csv")
+
+plot_fix(plot_ped_3[[1]], width = 1000, cex = 0.4, col = plot_ped_3$color)
+```
+
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
+
+
+**For Jaime**
+
+Sent to Jaime 1/13/15.
+
+
+```r
+source("plot_fix.R")
+kl_ped <- processed_pedigree[processed_pedigree$id %in% c(6381, 6417) | grepl("KL", processed_pedigree$dna), ]
+
+request_01_15 <- winnowPedigree(kl_ped, fullsib_cutoff = 2, generation_cutoff = 3, include_families = c(1:2,4))
+```
+
+```
+##   Var1 Freq
+## 1    1   94
+## 4    4   18
+## 2    2   13
+## 5    5   12
+## 3    3    6
+## 6    6    6
+```
+
+```r
+pdf(file = "request_01_15.pdf", width = 11, height = 8.5)
+  plot_fix(request_01_15[[1]], width = 10000, cex = 0.3, col = request_01_15$color)
+dev.off()
+```
+
+```
+## pdf 
+##   2
+```
+
+```r
+print(request_01_15[[1]])
+```
+
+```
+## Pedigree object with 124 subjects
+## Bit size= 125
+```
+
+```r
+write.csv(request_01_15$pedigree %>% arrange(year, depth), row.names = FALSE, file = "request_01_15.csv")
+
+plot_fix(request_01_15[[1]], width = 1000, cex = 0.3, col = request_01_15$color)
+```
+
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
 
