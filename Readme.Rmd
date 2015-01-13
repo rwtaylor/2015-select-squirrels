@@ -164,7 +164,7 @@ processPedigree <- function(ped, dna_year_cutoff = 2006){
 **Process Pedigree**
 
 ```{r }
-ped_to_clean = ped_2014 %>% filter(grid == "KS") %>% rename(year = byear)
+ped_to_clean = ped_2014 %>% filter(grid == "KS") %>% mutate(year = dna_year)
 
 processed_pedigree <- processPedigree(ped_to_clean, dna_year_cutoff = 2006)
 ```
@@ -225,10 +225,10 @@ winnowPedigree <- function(ped, fullsib_cutoff = 3, generation_cutoff = 1, inclu
 
 ```{r fig.width = 20, fig.height = 10, dpi = 300}
 source("plot_fix.R")
-plot_ped_1 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 2, generation_cutoff = 2, include_families = 1:5)
+plot_ped_1 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 3, generation_cutoff = 2, include_families = 1:10)
 
 pdf(file = "target_pedigree_1.pdf", width = 11, height = 8.5)
-  plot_fix(plot_ped_1[[1]], width = 1000, cex = 0.25, col = plot_ped_1$color)
+  plot_fix(plot_ped_1[[1]], width = 1000, cex = 0.3, col = plot_ped_1$color)
 dev.off()
 print(plot_ped_1[[1]])
 write.csv(plot_ped_1$pedigree, file = "plot_ped_1.csv")
@@ -237,14 +237,47 @@ plot_fix(plot_ped_1[[1]], width = 1000, cex = 0.25, col = plot_ped_1$color)
 
 ```{r fig.width = 20, fig.height = 10, dpi = 300}
 source("plot_fix.R")
-plot_ped_2 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 2, generation_cutoff = 1, include_families = 1)
+plot_ped_2 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 2, generation_cutoff = 3, include_families = 1:5)
 
 pdf(file = "target_pedigree_2.pdf", width = 11, height = 8.5)
-  plot_fix(plot_ped_2[[1]], width = 1000, cex = 0.4, col = plot_ped_2$color)
+  plot_fix(plot_ped_2[[1]], width = 10000, cex = 0.3, col = plot_ped_2$color)
 dev.off()
 print(plot_ped_2[[1]])
 write.csv(plot_ped_2$pedigree, file = "plot_ped_2.csv")
 
 plot_fix(plot_ped_2[[1]], width = 1000, cex = 0.4, col = plot_ped_2$color)
+```
+
+```{r fig.width = 20, fig.height = 10, dpi = 300}
+source("plot_fix.R")
+plot_ped_3 <- winnowPedigree(processed_pedigree, fullsib_cutoff = 1, generation_cutoff = 4, include_families = 1:10)
+
+pdf(file = "target_pedigree_3.pdf", width = 11, height = 8.5)
+  plot_fix(plot_ped_3[[1]], width = 1000, cex = 0.5, col = plot_ped_3$color)
+dev.off()
+print(plot_ped_3[[1]])
+write.csv(plot_ped_3$pedigree, file = "plot_ped_3.csv")
+
+plot_fix(plot_ped_3[[1]], width = 1000, cex = 0.4, col = plot_ped_3$color)
+```
+
+
+**For Jaime**
+
+Sent to Jaime 1/13/15.
+
+```{r fig.width = 20, fig.height = 10, dpi = 300}
+source("plot_fix.R")
+kl_ped <- processed_pedigree[processed_pedigree$id %in% c(6381, 6417) | grepl("KL", processed_pedigree$dna), ]
+
+request_01_15 <- winnowPedigree(kl_ped, fullsib_cutoff = 2, generation_cutoff = 3, include_families = c(1:2,4))
+
+pdf(file = "request_01_15.pdf", width = 11, height = 8.5)
+  plot_fix(request_01_15[[1]], width = 10000, cex = 0.3, col = request_01_15$color)
+dev.off()
+print(request_01_15[[1]])
+write.csv(request_01_15$pedigree %>% arrange(year, depth), row.names = FALSE, file = "request_01_15.csv")
+
+plot_fix(request_01_15[[1]], width = 1000, cex = 0.3, col = request_01_15$color)
 ```
 
